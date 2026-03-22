@@ -1,7 +1,7 @@
 # AI Safe Alert App
 
 ## Overview
-AI Safe Alert App is a safety-focused application that helps users send emergency alerts quickly during unsafe situations.
+AI Safe Alert App is a safety-focused web application that enables users to quickly send emergency alerts during unsafe situations. The app includes an AI-powered assistant that provides real-time safety guidance, emergency response suggestions and supports faster access to help through location sharing and alert notifications.
 
 ## Features
 - SOS emergency alert button

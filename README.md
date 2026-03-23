@@ -24,4 +24,4 @@ The AI system provides:
 - Product Manager
 - Product Designer
 - Software Developer
-- AI Engineer
+  

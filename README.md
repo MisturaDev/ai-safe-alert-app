@@ -20,6 +20,24 @@ The AI system provides:
 - AI: OpenAI API
 - Backend: (To be decided by team)
 
+## Local Setup
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Create an environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+3. Add your OpenAI key in `.env.local`:
+   ```bash
+   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   ```
+4. Start the app:
+   ```bash
+   npm run dev
+   ```
+
 ## Team Roles
 - Product Manager
 - Product Designer

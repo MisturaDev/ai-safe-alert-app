@@ -1,3 +1,5 @@
+import AIAssistant from "./AIAssistant";
+
 function App() {
   return (
     <div style={{ textAlign: "center", marginTop: "60px" }}>
@@ -19,6 +21,7 @@ function App() {
       >
         SOS
       </button>
+      <AIAssistant />
     </div>
   );
 }

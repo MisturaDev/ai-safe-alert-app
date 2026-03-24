@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-function ChatBot() {
+function ChatBot({ sosActive }) {
   const [messages, setMessages] = useState([
     {
+      id: "intro",
       sender: "bot",
-      text: "Hello. I am the safety assistant. Briefly describe what you need help with.",
+      text: "Assistant is standing by. Activate SOS to begin guidance.",
       time: new Date(),
     },
   ]);
@@ -13,22 +14,46 @@ function ChatBot() {
   const getResponse = (msg) => {
     const text = msg.toLowerCase();
 
-    if (text.includes("help") || text.includes("danger")) {
+    if (text.includes("help") || text.includes("danger") || text.includes("emergency")) {
       return "WARNING: Stay calm. Move to a safe place and contact emergency services.";
     } else if (text.includes("hello")) {
       return "Hello. How can I assist you?";
     } else {
-      return "I'm here to help. Please describe your situation.";
+      return "I am here to help. Describe what you need right now.";
     }
   };
 
+  useEffect(() => {
+    if (!sosActive) return;
+
+    setMessages((prev) => {
+      const alreadyAdded = prev.some((msg) => msg.id === "sos-guidance");
+      if (alreadyAdded) return prev;
+
+      return [
+        ...prev,
+        {
+          id: "sos-guidance",
+          sender: "bot",
+          text: "SOS activated. If possible, move to a safe place and contact emergency services.",
+          time: new Date(),
+        },
+      ];
+    });
+  }, [sosActive]);
+
   const handleSend = () => {
     const trimmed = input.trim();
-    if (!trimmed) return;
+    if (!trimmed || !sosActive) return;
 
     const now = new Date();
-    const userMessage = { sender: "user", text: trimmed, time: now };
-    const botMessage = { sender: "bot", text: getResponse(trimmed), time: new Date() };
+    const userMessage = { id: `${now.getTime()}-user`, sender: "user", text: trimmed, time: now };
+    const botMessage = {
+      id: `${now.getTime()}-bot`,
+      sender: "bot",
+      text: getResponse(trimmed),
+      time: new Date(),
+    };
 
     setMessages((prev) => [...prev, userMessage, botMessage]);
     setInput("");
@@ -53,43 +78,41 @@ function ChatBot() {
   );
 
   return (
-    <div style={{ marginTop: "40px" }}>
-      <h3>AI Safety Assistant</h3>
+    <div className="chatbot">
+      <div className="chatbot-title">AI Safety Assistant</div>
 
-      <div
-        style={{
-          minHeight: "180px",
-          border: "1px solid #ccc",
-          padding: "12px",
-          borderRadius: "6px",
-          textAlign: "left",
-          background: "#fafafa",
-        }}
-      >
-        {formattedMessages.map((msg, index) => (
-          <div key={index} style={{ marginBottom: "10px" }}>
-            <div style={{ fontWeight: "600" }}>
+      <div className="chatbot-panel">
+        {formattedMessages.map((msg) => (
+          <div key={msg.id} className="chatbot-message">
+            <div className="chatbot-meta">
               {msg.sender === "user" ? "You" : "AI"}{" "}
-              <span style={{ color: "#666", fontWeight: "400", fontSize: "12px" }}>
-                {msg.timeText}
-              </span>
+              <span className="chatbot-time">{msg.timeText}</span>
             </div>
-            <div>{msg.text}</div>
+            <div className="chatbot-text">{msg.text}</div>
           </div>
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: "8px", marginTop: "10px" }}>
+      {!sosActive && (
+        <div className="chatbot-hint">Activate SOS to start real-time guidance.</div>
+      )}
+
+      <div className="chatbot-input-row">
         <input
           type="text"
-          placeholder="Type a message..."
+          placeholder={sosActive ? "Type a message..." : "SOS required to chat"}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          style={{ padding: "10px", flex: 1 }}
+          disabled={!sosActive}
+          className="input"
         />
 
-        <button onClick={handleSend} style={{ padding: "10px 16px" }}>
+        <button
+          onClick={handleSend}
+          className="primary-button"
+          disabled={!sosActive}
+        >
           Send
         </button>
       </div>

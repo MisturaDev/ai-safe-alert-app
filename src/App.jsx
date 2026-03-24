@@ -1,24 +1,12 @@
+import SOSButton from "./components/SOSButton";
+
 function App() {
   return (
-    <div style={{ textAlign: "center", marginTop: "60px" }}>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>AI Safe Alert App</h1>
-      <p>Your safety matters. Stay alert, stay protected.</p>
+      <p>Your safety matters</p>
 
-      <button
-        style={{
-          marginTop: "30px",
-          padding: "20px 40px",
-          fontSize: "20px",
-          backgroundColor: "red",
-          color: "white",
-          border: "none",
-          borderRadius: "10px",
-          cursor: "pointer"
-        }}
-        onClick={() => alert("🚨 Emergency Alert Sent! (Demo)")}
-      >
-        SOS
-      </button>
+      <SOSButton />
     </div>
   );
 }

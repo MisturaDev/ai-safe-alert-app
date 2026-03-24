@@ -1,4 +1,5 @@
 import SOSButton from "./components/SOSButton";
+import ChatBot from "./components/ChatBot";
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <p>Your safety matters</p>
 
       <SOSButton />
+      <ChatBot />
     </div>
   );
 }

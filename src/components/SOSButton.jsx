@@ -1,34 +1,30 @@
 import { useState } from "react";
 
 function SOSButton() {
-  const [alertSent, setAlertSent] = useState(false);
+  const [sent, setSent] = useState(false);
 
-  const handleSOS = () => {
-    setAlertSent(true);
+  const handleClick = () => {
+    setSent(true);
+    // In a real app, trigger an SOS flow here.
+    alert("SOS sent. Stay safe.");
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "40px" }}>
+    <div style={{ marginTop: "20px" }}>
       <button
-        onClick={handleSOS}
+        onClick={handleClick}
         style={{
-          padding: "20px 40px",
-          fontSize: "20px",
-          backgroundColor: "red",
-          color: "white",
+          backgroundColor: "#d32f2f",
+          color: "#fff",
+          padding: "12px 20px",
           border: "none",
-          borderRadius: "10px",
-          cursor: "pointer"
+          borderRadius: "6px",
+          cursor: "pointer",
+          fontWeight: "bold",
         }}
       >
-        🚨 SOS
+        {sent ? "SOS Sent" : "Send SOS"}
       </button>
-
-      {alertSent && (
-        <p style={{ marginTop: "20px", color: "green" }}>
-          Alert sent successfully! Help is on the way.
-        </p>
-      )}
     </div>
   );
 }

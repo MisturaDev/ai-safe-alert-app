@@ -1,74 +1,78 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const SYSTEM_PROMPT =
   "You are an emergency safety assistant. Give calm, practical, step-by-step guidance. For immediate danger, always advise contacting local emergency services first.";
 
+const createMessage = (role, content) => ({
+  id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+  role,
+  content
+});
+
 function AIAssistant() {
   const [messages, setMessages] = useState([
-    {
-      role: "assistant",
-      content:
-        "Hi, I’m your safety assistant. Tell me what is happening and I will suggest next safe steps."
-    }
+    createMessage(
+      "assistant",
+      "Hi, I’m your safety assistant. Tell me what is happening and I will suggest next safe steps."
+    )
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-
-  const canSend = useMemo(
-    () => Boolean(apiKey) && Boolean(input.trim()) && !isLoading,
-    [apiKey, input, isLoading]
-  );
+  const canSend = Boolean(input.trim()) && !isLoading;
 
   const sendMessage = async () => {
     const trimmed = input.trim();
-    if (!trimmed || !apiKey || isLoading) {
+    if (!trimmed || isLoading) {
       return;
     }
 
-    const nextMessages = [...messages, { role: "user", content: trimmed }];
+    const nextMessages = [...messages, createMessage("user", trimmed)];
     setMessages(nextMessages);
     setInput("");
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+      const payloadMessages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...nextMessages.map((message) => ({
+          role: message.role,
+          content: message.content
+        }))
+      ];
+      const response = await fetch("/api/safety-chat", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          model: "gpt-4o-mini",
-          messages: [{ role: "system", content: SYSTEM_PROMPT }, ...nextMessages]
+          messages: payloadMessages
         })
       });
 
       if (!response.ok) {
-        const errorBody = await response.text();
-        throw new Error(errorBody || "OpenAI request failed");
+        const errorBody = await response.json();
+        throw new Error(errorBody?.error || "Safety chat request failed");
       }
 
       const data = await response.json();
-      const assistantReply = data?.choices?.[0]?.message?.content?.trim();
+      const assistantReply = data?.content?.trim();
 
       setMessages((current) => [
         ...current,
-        {
-          role: "assistant",
-          content:
-            assistantReply ||
+        createMessage(
+          "assistant",
+          assistantReply ||
             "I could not generate a response right now. If you are in immediate danger, call local emergency services."
-        }
+        )
       ]);
-    } catch {
+    } catch (error) {
+      console.error("AI safety assistant request failed:", error);
       setMessages((current) => [
         ...current,
-        {
-          role: "assistant",
-          content:
-            "I’m having trouble connecting to the AI service. If this is urgent, call local emergency services now."
-        }
+        createMessage(
+          "assistant",
+          "I’m having trouble connecting to the AI service. If this is urgent, call local emergency services now."
+        )
       ]);
     } finally {
       setIsLoading(false);
@@ -87,11 +91,9 @@ function AIAssistant() {
       }}
     >
       <h2 style={{ margin: "0 0 12px" }}>AI Safety Assistant</h2>
-      {!apiKey && (
-        <p style={{ marginTop: 0, color: "#a10000" }}>
-          Add <code>VITE_OPENAI_API_KEY</code> to your environment to use AI chat.
-        </p>
-      )}
+      <p style={{ marginTop: 0, color: "#5a5a5a" }}>
+        Ask for safety guidance in real-time.
+      </p>
       <div
         style={{
           minHeight: "220px",
@@ -103,9 +105,9 @@ function AIAssistant() {
           backgroundColor: "#fafafa"
         }}
       >
-        {messages.map((message, index) => (
+        {messages.map((message) => (
           <p
-            key={`${message.role}-${index}`}
+            key={message.id}
             style={{
               margin: "0 0 10px",
               lineHeight: 1.45,

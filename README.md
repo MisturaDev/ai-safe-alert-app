@@ -27,13 +27,17 @@ The AI system provides:
    ```
 2. Create an environment file:
    ```bash
-   cp .env.example .env.local
+   cp .env.example .env
    ```
-3. Add your OpenAI key in `.env.local`:
+3. Add your OpenAI key in `.env`:
    ```bash
-   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
-4. Start the app:
+4. Start the backend API proxy:
+   ```bash
+   npm run dev:server
+   ```
+5. In a second terminal, start the frontend app:
    ```bash
    npm run dev
    ```

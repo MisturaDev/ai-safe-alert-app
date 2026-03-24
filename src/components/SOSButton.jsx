@@ -1,30 +1,24 @@
-import { useState } from "react";
-
-function SOSButton() {
-  const [sent, setSent] = useState(false);
-
+function SOSButton({ isActive, onActivate }) {
   const handleClick = () => {
-    setSent(true);
-    // In a real app, trigger an SOS flow here.
-    alert("SOS sent. Stay safe.");
+    if (!isActive) {
+      onActivate();
+    }
   };
 
   return (
-    <div style={{ marginTop: "20px" }}>
+    <div className="sos-wrap">
       <button
         onClick={handleClick}
-        style={{
-          backgroundColor: "#d32f2f",
-          color: "#fff",
-          padding: "12px 20px",
-          border: "none",
-          borderRadius: "6px",
-          cursor: "pointer",
-          fontWeight: "bold",
-        }}
+        className={`sos-button ${isActive ? "is-active" : ""}`}
+        disabled={isActive}
       >
-        {sent ? "SOS Sent" : "Send SOS"}
+        {isActive ? "SOS Active" : "Send SOS"}
       </button>
+      <div className="sos-helper">
+        {isActive
+          ? "Alerts are active and contacts have been notified."
+          : "Tap once to alert your emergency contacts."}
+      </div>
     </div>
   );
 }

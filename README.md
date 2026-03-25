@@ -66,7 +66,7 @@ The app includes an AI-powered assistant that provides real-time safety guidance
 
 | SOS Button | AI-chatbot |
 |---------------|-----------------|
-| ![SOS Button](screenshots/SOS.png) | ![AI-Chatbot](screenshots/Chatbot.png) |
+| ![SOS Button](screenshots/SOS-activated.png) | ![AI-Chatbot](screenshots/Chatbot.png) |
 
 
 ---
@@ -86,6 +86,7 @@ src/
   App.jsx
   index.css
   main.jsx
+  ```
 
 
 ---
@@ -94,8 +95,8 @@ src/
 The application includes a rule-based AI chatbot that provides real-time safety guidance based on user input.
 
 Example:
-- "help" → safety instructions
-- "danger" → emergency response steps
+- help → safety instructions
+- danger → emergency response steps
 
 
 ---

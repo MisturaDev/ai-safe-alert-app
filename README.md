@@ -1,13 +1,10 @@
 # AI Safe Alert App
 
-## Live Demo
-
-[Live Demo](https://ai-safe-alert-app.vercel.app/)
-
 ---
 
 ## Project Overview
 AI Safe Alert App is a safety-focused web application that enables users to quickly send emergency alerts, share location and receive AI-guided assistance in distress situations.
+
 The app includes an AI-powered assistant that provides real-time safety guidance, emergency response suggestions and supports faster access to help through location sharing and alert notifications.
 
 ---
@@ -45,7 +42,7 @@ The app includes an AI-powered assistant that provides real-time safety guidance
     ```bash
     cd ai-safe-alert-app
 
- 3. Install dependencies.:
+ 3. Install dependencies
     ```bash
     npm install
 
@@ -53,6 +50,11 @@ The app includes an AI-powered assistant that provides real-time safety guidance
      ```bash
      npm run dev
 
+---
+
+## Live Demo
+
+[Live Demo](https://ai-safe-alert-app.vercel.app/)
 
 ---
 

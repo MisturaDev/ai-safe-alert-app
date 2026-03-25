@@ -42,7 +42,7 @@ The app includes an AI-powered assistant that provides real-time safety guidance
     ```bash
     cd ai-safe-alert-app
 
- 3. Install dependencies
+ 3. Install dependencies:
     ```bash
     npm install
 
@@ -60,11 +60,20 @@ The app includes an AI-powered assistant that provides real-time safety guidance
 
 ## Screenshots
 
+| Home Screen | Onboarding |
+|------------|----------------|
+| ![Home Screen](screenshots/Home-screen.png) | ![Onboarding](screenshots/Onboarding.png) |
+
+| SOS Button | AI-chatbot |
+|---------------|-----------------|
+| ![SOS Button](screenshots/SOS.png) | ![AI-Chatbot](screenshots/Chatbot.png) |
+
 
 ---
 
 ## Project Structure
 
+```bash
 src/
   assets/
   components/
@@ -77,6 +86,7 @@ src/
   App.jsx
   index.css
   main.jsx
+
 
 ---
 

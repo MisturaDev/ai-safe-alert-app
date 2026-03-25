@@ -76,18 +76,19 @@ The app includes an AI-powered assistant that provides real-time safety guidance
 ```bash
 src/
   assets/
+    hero.png
+    react.svg
+    vite.svg
   components/
     ChatBot.jsx
     Onboarding.jsx
     SOSButton.jsx
-    screenshots/
   pages/
   App.css
   App.jsx
   index.css
   main.jsx
   ```
-
 
 ---
 

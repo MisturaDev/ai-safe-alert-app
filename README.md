@@ -1,7 +1,8 @@
 # AI Safe Alert App
 
 ## Live Demo
-https://ai-safe-alert-app.vercel.app/
+
+[Live Demo](https://ai-safe-alert-app.vercel.app/)
 
 ---
 
@@ -31,6 +32,27 @@ The app includes an AI-powered assistant that provides real-time safety guidance
 - ESLint – Code quality and linting
 - React Hooks plugin – Enforces best practices
 - React Refresh plugin – Enables fast refresh during development
+
+---
+
+## How to Run Locally
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/MisturaDev/ai-safe-alert-app.git
+
+ 2. Navigate into the project folder:
+    ```bash
+    cd ai-safe-alert-app
+
+ 3. Install dependencies.:
+    ```bash
+    npm install
+
+  4. Run the app:
+     ```bash
+     npm run dev
+
 
 ---
 
